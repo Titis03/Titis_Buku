@@ -149,7 +149,6 @@ body {
 
 /* ================= LOGIN PAGE ================= */
 
-/* overlay gelap */
 .login-overlay {
     min-height: 100vh;
     background: rgba(0, 0, 0, 0.331);
@@ -310,29 +309,27 @@ body {
 /* PRODUK */
 
 .card-produk {
-    display: flex;          /* Membuat isi kartu (gambar & teks) bersampingan */
-    align-items: flex-start; /* Teks rata atas dengan gambar */
+    display: flex;          
+    align-items: flex-start; 
     background-color: white;
     padding: 20px;
     border-radius: 15px;
-    width: 100%;            /* Memenuhi lebar container */
-    max-width: 800px;       /* Membatasi lebar maksimal agar tidak terlalu gepeng */
-    gap: 30px;              /* Jarak antara gambar dan deskripsi */
+    width: 100%;            
+    max-width: 800px;       
+    gap: 30px;              
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     transition: 0.3s;
 }
 
-/* Ukuran gambar dalam mode list */
 .card-produk img {
-    width: 180px;           /* Lebar gambar tetap */
-    height: 240px;          /* Tinggi gambar tetap agar seragam */
-    object-fit: cover;      /* Memastikan gambar tidak tertarik (distorsi) */
+    width: 180px;           
+    height: 240px;          
+    object-fit: cover;      
     border-radius: 10px;
 }
 
-/* Bagian deskripsi di sebelah kanan */
 .info-buku {
-    text-align: left;       /* Teks rata kiri */
+    text-align: left;      
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -375,42 +372,41 @@ body {
 
 .produk-box .produk-list {
     display: flex;
-    flex-direction: column; /* Mengatur arah baris ke bawah */
-    gap: 20px;              /* Jarak antar kartu */
-    align-items: center;    /* Agar kartu berada di tengah secara horizontal */
+    flex-direction: column; 
+    gap: 20px;              
+    align-items: center;    
 }
 
 .card-produk {
-    display: flex;          /* Membuat konten di dalamnya (gambar & teks) bersampingan */
-    flex-direction: row;    /* Kunci utama: gambar di kiri, teks di kanan */
+    display: flex;          
+    flex-direction: row;    
     background-color: white;
     padding: 20px;
     border-radius: 15px;
-    width: 100%;            /* Mengikuti lebar container */
-    max-width: 900px;       /* Membatasi lebar agar tidak terlalu panjang di PC */
-    gap: 30px;              /* Jarak antara gambar dan deskripsi */
+    width: 100%;            
+    max-width: 900px;       
+    gap: 30px;              
+    
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     transition: transform 0.3s ease;
-    align-items: center;    /* Agar gambar dan teks sejajar di tengah secara vertikal */
+    align-items: center;    
 }
 
 .card-produk:hover {
     transform: translateY(-5px);
 }
 
-/* Ukuran Gambar: Disesuaikan agar pas di sebelah kiri */
 .card-produk img {
-    width: 150px !important; /* Lebar gambar */
-    height: 210px !important; /* Tinggi gambar */
+    width: 150px !important; 
+    height: 210px !important; 
     object-fit: cover;
     border-radius: 10px;
-    margin-top: 0 !important; /* Menghapus margin negatif jika ada */
+    margin-top: 0 !important; 
 }
 
-/* Area Deskripsi di sebelah kanan */
 .info-buku {
     flex: 1;               
-    text-align: left;       /* Teks rata kiri */
+    text-align: left;       
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -437,9 +433,9 @@ body {
 
 /* PRODUK */
 
-/* ================= FOOTER / COPYRIGHT ================= */
+/* FOOTER / COPYRIGHT */
 .footer {
-    background-color: rgba(199, 184, 139, 0.66); /* Warna hijau yang sama dengan navbar */
+    background-color: rgba(199, 184, 139, 0.66);
     color: rgb(11, 66, 0);
     padding: 20px 0;
     text-align: center;
@@ -453,7 +449,6 @@ body {
     font-weight: bold;
 }
 
-/* Mengatur list agar berjejer ke bawah */
 .produk-list {
     display: flex;
     flex-direction: column;
@@ -461,10 +456,9 @@ body {
     align-items: center;
 }
 
-/* Card desain horizontal (Gambar kiri, Teks kanan) */
 .card-produk {
     display: flex;
-    flex-direction: row; /* Kunci desain horizontal */
+    flex-direction: row; 
     background-color: white;
     padding: 20px;
     border-radius: 15px;
@@ -477,7 +471,7 @@ body {
 }
 
 .card-produk:hover {
-    transform: translateX(10px); /* Efek geser sedikit saat hover */
+    transform: translateX(10px); 
 }
 
 .card-produk img {
@@ -498,3 +492,4 @@ body {
     margin-top: 10px;
     line-height: 1.5;
 }
+
