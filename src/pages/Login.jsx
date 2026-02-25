@@ -19,7 +19,7 @@ function Login() {
             localStorage.setItem("role", response.data.user.role);
             localStorage.setItem("isLogin", "true");
             alert("Login berhasil");
-            navigate("/dashboard");
+            navigate("/homePage");
         } catch (error) {
             alert("Login gagal. Pastikan API Server sudah menyala.");
         }
