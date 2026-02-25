@@ -4,6 +4,7 @@ import "./App.css";
 
 import Login from "./pages/Login";
 import HomePage from "./pages/homePage";
+import TentangKami from "./pages/tentangKami";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -12,7 +13,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
+        
         <Route path="/homePage" element={< HomePage />} />
+        <Route path="/tentangKami" element={< TentangKami />} />
+
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>
     </div>

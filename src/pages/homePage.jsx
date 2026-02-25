@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
-import { kelasTerbaru, dataSwiper } from "../data/index"; 
+import { kelasTerbaru, dataSwiper } from "../data/index";
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -33,7 +33,14 @@ function HomePage() {
                         <ul className="menu">
                             <li><a href="#produk">Produk</a></li>
                             <li><a href="#testimoni">Testimoni</a></li>
-                            <li><a href="#" onClick={logout} style={{color: 'red'}}>Logout</a></li>
+                            <li>
+                                <a href="#" onClick={(e) => {
+                                    e.preventDefault(); 
+                                    navigate("/tentangKami"); 
+                                }}>
+                                    Tentang Kami
+                                </a>
+                            </li>                            <li><a href="#" onClick={logout} style={{ color: 'red' }}>Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -72,12 +79,12 @@ function HomePage() {
                 <div className="container">
                     <div className="produk-box">
                         <h1 className="text-center">Koleksi Buku Kami</h1>
-                        
+
                         <ul className="filter-tab">
                             {["All Produk", "Fiksi Indonesia", "Pengembangan Diri", "Fiksi Terjemahan"].map((item) => (
-                                <li 
-                                    key={item} 
-                                    className={activeFilter === item ? "active" : ""} 
+                                <li
+                                    key={item}
+                                    className={activeFilter === item ? "active" : ""}
                                     onClick={() => setActiveFilter(item)}
                                 >
                                     {item}
@@ -137,6 +144,7 @@ function HomePage() {
             </div>
         </div>
     );
+
 }
 
 export default HomePage;

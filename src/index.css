@@ -493,3 +493,16 @@ body {
     line-height: 1.5;
 }
 
+/* TENTANG KAMI */
+
+.tentangkami-page .pt-5 {
+    margin-top: 0;
+    margin-top: -50px;
+    margin-bottom: 30px;
+}
+
+.tentangkami-page .py-3 {
+    text-align: left;
+}
+
+/* TENTANG KAMI */
