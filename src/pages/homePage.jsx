@@ -40,7 +40,16 @@ function HomePage() {
                                 }}>
                                     Tentang Kami
                                 </a>
-                            </li>                            <li><a href="#" onClick={logout} style={{ color: 'red' }}>Logout</a></li>
+                            </li>                            
+                            <li>
+                                <a href="#" onClick={(e) => {
+                                    e.preventDefault(); 
+                                    navigate("/alamat"); 
+                                }}>
+                                    Alamat Kami
+                                </a>
+                            </li>  
+                            <li><a href="#" onClick={logout} style={{ color: 'red' }}>Logout</a></li>
                         </ul>
                     </div>
                 </div>

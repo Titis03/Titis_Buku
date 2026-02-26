@@ -5,6 +5,7 @@ import "./App.css";
 import Login from "./pages/Login";
 import HomePage from "./pages/homePage";
 import TentangKami from "./pages/tentangKami";
+import Alamat from "./pages/alamat";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -16,6 +17,7 @@ function App() {
         
         <Route path="/homePage" element={< HomePage />} />
         <Route path="/tentangKami" element={< TentangKami />} />
+        <Route path="/alamat" element={< Alamat />} />
 
         <Route path="*" element={<Navigate to="/login" />} />
       </Routes>

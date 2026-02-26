@@ -440,6 +440,10 @@ body {
     padding: 20px 0;
     text-align: center;
     margin-top: 50px; 
+    bottom: 0;
+    width: 100%;
+    clear: both;
+    display: block;
 }
 
 .footer p {
@@ -506,3 +510,20 @@ body {
 }
 
 /* TENTANG KAMI */
+
+/* ALAMAT */
+
+.alamat-page {
+    padding-top: 100px;
+}
+
+.alamat-page .p,
+.alamat-page h1 {
+    margin-top: 0;
+}
+
+.alamat {
+    padding-bottom: 200px;
+}
+
+/* ALAMAT */
