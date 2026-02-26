@@ -515,6 +515,7 @@ body {
 
 .alamat-page {
     padding-top: 100px;
+    position: middle;
 }
 
 .alamat-page .p,
@@ -524,6 +525,24 @@ body {
 
 .alamat {
     padding-bottom: 200px;
+    padding-top: 100px;
 }
 
 /* ALAMAT */
+
+/* TOMBOL KEMBALI */
+
+.btn-back {
+    position: absolute;
+    top: 80px;
+    left: 30px;
+    background-Color: #03410a;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-Radius: 5px;
+    cursor: pointer;
+    margin-Bottom: 20px;
+    font-Weight: bold;
+    z-index: 10;
+}
