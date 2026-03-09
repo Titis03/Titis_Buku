@@ -33,6 +33,15 @@ body {
 /* ================= NAVBAR ================= */
 
 .navbar {
+  transition: 0.3s all ease; /* Biar transisi warnanya halus */
+  background-color: transparent; 
+}
+.navbar.color-active {
+  background-color: #fff9ce !important; /* Warna kuning dari file atasmu */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.navbar {
     padding: 20px 0;
 }
 
@@ -546,3 +555,84 @@ body {
     font-Weight: bold;
     z-index: 10;
 }
+
+/* STYLE FOOTER */
+.footer {
+    width: 100%;
+    min-height: 50vh;
+}
+
+.footer .row:nth-child(1) .col:nth-child(1) h3 {
+    color: var(--color-text);
+}
+
+.footer .row:nth-child(1) .col:nth-child(1) .desc {
+    color: var(--color-text);
+    font-size: 14px;
+    line-height: 2;
+}
+
+.footer .no a,
+.footer .mail a {
+    display: flex;
+    align-items: center;
+    color: #000000;
+    column-gap: 5px;
+    margin-bottom: 10px;
+}
+
+.footer .no a:hover,
+.footer .mail a:hover {
+   color: var(--secondary-color);
+}
+
+.footer .row:nth-child(1) .col:nth-child(2) {
+    gap: 10px;
+}
+
+.footer .row:nth-child(1) .col:nth-child(2) a {
+    color: black;
+    text-decoration: none;
+    font-size:  14px;
+} 
+
+.footer .row:nth-child(1) .col:nth-child(2) a:hover {
+    color: var(--secondary-color);
+} 
+
+.footer .subscribe{
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.footer .subscribe input {
+    width: 200px;
+    height:38px;
+    padding: 5px;
+}
+
+.footer .social {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer .social i {
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+.footer .social i:hover {
+    color: var(--secondary-color);
+}
+
+.footer .row:nth-child(2) {
+    margin-top: 100px;
+}
+/* STYLE FOOTER */
