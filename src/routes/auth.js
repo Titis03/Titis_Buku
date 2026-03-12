@@ -1,23 +1,17 @@
 import express from 'express'; 
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-// Untuk file buatan sendiri (db/middleware), wajib pakai ekstensi .js di akhir
 import pool from '../db/pool.js'; 
 import { verifyToken } from '../middleware/authorization.js';
 
 const router = express.Router();
 
-// --- Konfigurasi dan Helper Functions ---
-
-// Dapatkan secret keys dari environment variables
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || 'your_access_secret_default';
 const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || 'your_refresh_secret_default';
 
-// Helper function untuk membuat Access Token (Payload: id, username, role)
 const generateAccessToken = (user) =>
     jwt.sign({ id_user: user.id_user, username: user.username, role: user.role }, ACCESS_TOKEN_SECRET, { expiresIn: '1d' });
 
-// Helper function untuk membuat Refresh Token (Payload: id, username, role)
 const generateRefreshToken = (user) =>
     jwt.sign({ id_user: user.id_user, username: user.username, role: user.role }, REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 
@@ -25,7 +19,7 @@ const generateRefreshToken = (user) =>
 // 1. POST /auth/register - Registrasi Pengguna Baru (BCRYPT)
 // =========================================================
 router.post('/register', async (req, res) => {
-    const {username, password} = req.body;
+    const {fullname, username, email, password} = req.body;
     
     if (!fullname || !username || !email || !password) {
         return res.status(400).json({
@@ -34,7 +28,6 @@ router.post('/register', async (req, res) => {
     }
 
     try {
-        // Pengecekan Duplikasi Username atau Email
         const existingUser = await pool.query(
             'SELECT 1 FROM users WHERE username = $1 OR email = $2',
             [username, email]
@@ -44,13 +37,9 @@ router.post('/register', async (req, res) => {
             return res.status(409).json({ message: 'Registrasi gagal. Username atau email sudah terdaftar.' });
         }
         
-        // --- 🔑 TAMBAHAN: HASHING PASSWORD ---
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
-        // --- 🔑 END TAMBAHAN ---
         
-        // Simpan HASHED PASSWORD
-        // Role default saat register adalah 'customer'
         const {rows} = await pool.query(
             `INSERT INTO users (fullname, username, email, password, role)
             VALUES ($1, $2, $3, $4, 'customer')
@@ -80,27 +69,22 @@ router.post('/login', async (req, res) => {
     }
 
     try {
-        // Ambil data user dari database
         const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
 
         const user = result.rows[0];
 
-        // 🚨 KOREKSI LOGIKA: Cek apakah user ditemukan sebelum membandingkan password
         if (!user) {
              return res.status(401).json({ error: "Username atau password salah"});
         }
         
-        // Membandingkan password input (teks biasa) dengan hash di DB
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
             return res.status(401).json({ error: "Username atau password salah"});
         }
         
-        // Buat token
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
         
-        // Simpan refresh token di database (di tabel tokens)
         await pool.query(
             `INSERT INTO tokens (id_user, token, expires_at)
             VALUES ($1, $2, NOW() + INTERVAL '7 days')
@@ -108,7 +92,6 @@ router.post('/login', async (req, res) => {
             [user.id_user, refreshToken]
         );
         
-        // respons sukses
         res.status(200).json({
             message: `📚Selamat datang di Toko Buku, ${user.username}📚!`,
             user: {
@@ -123,7 +106,6 @@ router.post('/login', async (req, res) => {
         });
 
     } catch (err) {
-        // Tangani kasus user tidak ditemukan (jika query gagal) atau error lain
         if (err.message.includes("Cannot read properties of undefined")) { 
              return res.status(401).json({ error: "Username atau password salah"});
         }
@@ -144,7 +126,6 @@ router.post('/refresh-token', async (req, res) => {
     }
     
     try {
-        // 1. Cek apakah refresh token ada di database dan belum kedaluwarsa
         const tokenCheck = await pool.query(
             'SELECT t.id_user, u.username, u.role FROM tokens t JOIN users u ON t.id_user = u.id_user WHERE t.token = $1 AND t.expires_at > NOW()',
             [refreshToken]
@@ -156,17 +137,14 @@ router.post('/refresh-token', async (req, res) => {
         
         const user = tokenCheck.rows[0];
         
-        // 2. Verifikasi JWT signature
         jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, async (err, decoded) => {
             if (err) {
                 await pool.query('DELETE FROM tokens WHERE token = $1', [refreshToken]);
                 return res.status(403).json({ message: 'Refresh token tidak valid.' });
             }
             
-            // 3. Generate Access Token Baru
             const newAccessToken = generateAccessToken(user); 
             
-            // 4. Kirim Access Token baru
             res.status(200).json({ 
                 message: 'Token berhasil diperbarui',
                 accessToken: newAccessToken,
@@ -188,7 +166,6 @@ router.post('/logout', async (req, res) => {
     if (!refreshToken) return res.status(400).json({ message: 'Refresh token harus disertakan.' });
     
     try {
-        // Hapus token dari tabel tokens
         const result = await pool.query('DELETE FROM tokens WHERE token = $1', [refreshToken]);
         
         if (result.rowCount === 0) {

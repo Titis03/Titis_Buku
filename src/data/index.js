@@ -1,107 +1,92 @@
-export const kelasTerbaru = [
-  { 
+import profil from "../assets/assets/testimonial/profil.png";
+
+export const testimonial = [
+  {
     id: 1,
-    src: "/CantikItuLuka.jpg", 
-    nama: "Cantik Itu Luka", 
-    kategori: "Fiksi Indonesia", 
-    harga: "Rp 105.000", 
-    stok: 40,
-    deskripsi: "Karya epik yang menggabungkan sejarah, realisme magis, dan tragedi keluarga Indonesia."
+    desc: "Koleksi buku di sini sangat lengkap dan selalu original. Packing-nya rapi sekali menggunakan bubble wrap yang tebal, sehingga buku sampai di rumah dengan kondisi yang sangat mulus tanpa lecet sedikitpun.",
+    image: profil,
+    name: "Citra",
+    skill: "Pecinta Novel",
   },
-  { 
+  {
     id: 2,
-    src: "/FilosofiTeras.jpg", 
-    nama: "Filosofi Teras", 
-    kategori: "Pengembangan Diri", 
-    harga: "Rp 108.000", 
-    stok: 150,
-    deskripsi: "Pengenalan ajaran Stoisisme untuk membantu meraih ketenangan mental di dunia modern."
+    desc: "Harga bukunya sangat terjangkau bagi kantong mahasiswa. Pengirimannya sangat cepat dan adminnya sangat responsif saat ditanya stok buku terbaru. Sangat merekomendasikan toko ini untuk koleksi harian.",
+    image: profil,
+    name: "Syafalina",
+    skill: "Mahasiswa",
   },
-  { 
+  {
     id: 3,
-    src: "/LaskarPelangi.jpg", 
-    nama: "Laskar Pelangi", 
-    kategori: "Fiksi Indonesia", 
-    harga: "Rp 85.000", 
-    stok: 90,
-    deskripsi: "Kisah inspiratif anak-anak Belitung mengejar mimpi melalui pendidikan."
+    desc: "Mantap, karena bukunya pasti asli 100%. Kemasannya sangat aman dan tebal untuk pengiriman luar kota, tidak perlu khawatir buku akan rusak di jalan. Saya akan menjadi langganan untuk pembelian buku-buku selanjutnya di toko ini.",
+    image: profil,
+    name: "Suci",
+    skill: "Kolektor Buku",
   },
-  { 
+  {
     id: 4,
-    src: "/LautBercerita.jpg", 
-    nama: "Laut Bercerita", 
-    kategori: "Fiksi Indonesia", 
-    harga: "Rp 115.000", 
-    stok: 75,
-    deskripsi: "Novel tentang perjuangan aktivis mahasiswa menuntut keadilan di tahun 90-an."
+    desc: "Sebagai kolektor, saya sangat teliti dengan kondisi fisik buku. Toko ini tidak pernah mengecewakan karena segel bukunya utuh dan pengemasannya menggunakan pelindung ekstra yang sangat profesional. Langganan setia!",
+    image: profil,
+    name: "Rindha",
+    skill: "Kolektor Buku",
   },
-  { 
+  {
     id: 5,
-    src: "/PerahuKertas.jpg", 
-    nama: "Perahu Kertas", 
-    kategori: "Fiksi Indonesia", 
-    harga: "Rp 95.000", 
-    stok: 60,
-    deskripsi: "Kisah romansa tentang pencarian jati diri antara Kugy dan Keenan."
+    desc: "Layanan pelanggan yang luar biasa ramah dan solutif! Saya memesan beberapa buku untuk kado dan mereka membantu memberikan bungkus kado yang rapi. Sampai di tujuan tepat waktu tanpa cacat sedikitpun.",
+    image: profil,
+    name: "Novella",
+    skill: "Pekerja Kantoran",
   },
-  { 
+  {
     id: 6,
-    src: "/SebuahSeniuntukBersikapBodoAmat.jpg", 
-    nama: "Sebuah Seni untuk Bersikap Bodo Amat", 
-    kategori: "Pengembangan Diri", 
-    harga: "Rp 95.000", 
-    stok: 110,
-    deskripsi: "Pendekatan segar dalam memilih hal yang benar-benar layak untuk dipedulikan."
+    desc: "Website-nya sangat user-friendly, cari judul buku jadi lebih praktis. Keamanan paket adalah hal nomor satu di sini, kardus tambahannya membuat buku-buku saya tetap dalam kondisi sempurna meskipun dikirim antar pulau.",
+    image: profil,
+    name: "Nevada",
+    skill: "Pembaca Santai",
   },
-  { 
-    id: 7,
-    src: "/TheAlchemist.jpg", 
-    nama: "The Alchemist", 
-    kategori: "Fiksi Terjemahan", 
-    harga: "Rp 65.000", 
-    stok: 80,
-    deskripsi: "Kisah Santiago dalam mengikuti takdirnya untuk menemukan harta karun di piramida."
-  },
-  { 
-    id: 8,
-    src: "/TheMidnightLibrary.jpg", 
-    nama: "The Midnight Library", 
-    kategori: "Fiksi Terjemahan", 
-    harga: "Rp 100.000", 
-    stok: 55,
-    deskripsi: "Menjelajahi ribuan kehidupan yang bisa dijalani Nora Seed di perpustakaan misterius."
-  },
-  { 
-    id: 9,
-    src: "/AtomicHabits.jpg", 
-    nama: "Atomic Habits", 
-    kategori: "Pengembangan Diri", 
-    harga: "Rp 108.000", 
-    stok: 120,
-    deskripsi: "Cara mudah membangun kebiasaan baik dan menghilangkan kebiasaan buruk."
-  }
 ];
 
 export const dataSwiper = [
   {
     id: 1,
-    desc: "Koleksi bukunya sangat lengkap dan original! Dijamin puas beli di toko TsaBook.",
-    image: "/people-1.jpg",
-    name: "King Abdi",
-    skill: "Pembaca Setia",
+    desc: "Koleksi buku di sini sangat lengkap dan selalu original. Packing-nya rapi sekali menggunakan bubble wrap yang tebal, sehingga buku sampai di rumah dengan kondisi yang sangat mulus tanpa lecet sedikitpun.",
+    image: profil,
+    name: "Citra",
+    skill: "Pecinta Novel",
   },
   {
     id: 2,
-    desc: "Harganya sangat masuk di kantong pelajar. Bisa-bisa aku menjadi langganan di toko ini!",
-    image: "/people-2.jpg",
-    name: "Resti Umayya",
-    skill: "Siswi STMJ",
+    desc: "Harga bukunya sangat terjangkau bagi kantong mahasiswa. Pengirimannya sangat cepat dan adminnya sangat responsif saat ditanya stok buku terbaru. Sangat merekomendasikan toko ini untuk koleksi harian.",
+    image: profil,
+    name: "Syafalina",
+    skill: "Mahasiswa",
   },
   {
     id: 3,
-    desc: "Pelayanan cepat dan pengemasan sangat aman. Cocok untuk yang ingin membeli via online.",
-    image: "/people-3.jpg",
-    name: "Roma Kelapa",
+    desc: "Pengalaman belanja yang luar biasa karena bukunya asli 100%. Kemasannya sangat aman untuk pengiriman luar kota, jadi tidak perlu khawatir buku rusak di jalan. Akan jadi langganan tetap ke depannya.",
+    image: profil,
+    name: "Suci",
     skill: "Kolektor Buku",
-  }
+  },
+  {
+    id: 4,
+    desc: "Sebagai kolektor, saya sangat teliti dengan kondisi fisik buku. Toko ini tidak pernah mengecewakan karena segel bukunya utuh dan pengemasannya menggunakan pelindung ekstra yang sangat profesional. Langganan setia!",
+    image: profil,
+    name: "Rindha",
+    skill: "Kolektor Buku",
+  },
+  {
+    id: 5,
+    desc: "Layanan pelanggan yang luar biasa ramah dan solutif! Saya memesan beberapa buku untuk kado dan mereka membantu memberikan bungkus kado yang rapi. Sampai di tujuan tepat waktu tanpa cacat sedikitpun.",
+    image: profil,
+    name: "Novella",
+    skill: "Pekerja Kantoran",
+  },
+  {
+    id: 6,
+    desc: "Website-nya sangat user-friendly, cari judul buku jadi lebih praktis. Keamanan paket adalah hal nomor satu di sini, kardus tambahannya membuat buku-buku saya tetap dalam kondisi sempurna meskipun dikirim antar pulau.",
+    image: profil,
+    name: "Nevada",
+    skill: "Pembaca Santai",
+  },
 ];
+

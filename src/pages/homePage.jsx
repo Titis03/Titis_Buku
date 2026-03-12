@@ -1,69 +1,35 @@
 import { useNavigate } from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
-import { kelasTerbaru, dataSwiper } from "../data/index";
+import Navbar from '../components/Navbar';
+import FooterComponent from "../components/FooterComponent";
+import { useState, useEffect } from "react";
+import productData from "../data/products.json";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
-
-import React, { useState } from 'react';
-
-function HomePage() {
+const HomePage = () => {
     const navigate = useNavigate();
+    const [products, setProducts] = useState([]);
+
     const namaAdmin = localStorage.getItem("username") || "Pengguna";
     const roleUser = localStorage.getItem("role") || "Guest";
-    const [activeFilter, setActiveFilter] = useState("All Produk");
 
-    const logout = () => {
-        localStorage.clear();
-        navigate("/");
-    };
+    useEffect(() => {
+        setProducts(productData);
+    }, []);
 
-    const bukuDifilter = activeFilter === "All Produk"
-        ? kelasTerbaru
-        : kelasTerbaru.filter(buku => buku.kategori === activeFilter);
+    const featuredProducts = products.slice(0, 4);
 
     return (
         <div>
-            <div className="navbar">
-                <div className="container">
-                    <div className="navbar-box">
-                        <div className="logo"><h1>TsaBook.id</h1></div>
-                        <ul className="menu">
-                            <li><a href="#produk">Produk</a></li>
-                            <li><a href="#testimoni">Testimoni</a></li>
-                            <li>
-                                <a href="#" onClick={(e) => {
-                                    e.preventDefault(); 
-                                    navigate("/tentangKami"); 
-                                }}>
-                                    Tentang Kami
-                                </a>
-                            </li>                            
-                            <li>
-                                <a href="#" onClick={(e) => {
-                                    e.preventDefault(); 
-                                    navigate("/alamat"); 
-                                }}>
-                                    Alamat Kami
-                                </a>
-                            </li>  
-                            <li><a href="#" onClick={logout} style={{ color: 'red' }}>Logout</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div className="dashboard" style={{ textAlign: "center", padding: "5px 0" }}>
-                <h1 style={{ color: "SaddleBrown", fontSize: "40px" }}>
-                    Selamat Datang, <span id="namaAdmin">{namaAdmin}</span>!
+            <div className="dashboard" style={{ textAlign: "center", padding: "20px 0 10px 0" }}>
+                <h1 style={{ color: "#1b4b35", fontSize: "40px", fontWeight: "normal" }}>
+                    Selamat Datang, <span style={{ color: "#1b4b35", fontWeight: "bold" }}>{namaAdmin}</span>!
                 </h1>
-                <p>Sekarang Anda login sebagai <strong>{roleUser}</strong></p>
+                <p style={{ color: "#666" }}>
+                    Sekarang Anda login sebagai <strong>{roleUser}</strong>
+                </p>
             </div>
 
             <div className="layanan">
-                <div className="container">
+                <div className="container fluid">
                     <div className="layanan-box">
                         <div className="box">
                             <i className="ri-book-fill"></i>
@@ -85,75 +51,31 @@ function HomePage() {
             </div>
 
             <div className="produk" id="produk">
-                <div className="container">
+                <div className="container fluid">
                     <div className="produk-box">
-                        <h1 className="text-center">Koleksi Buku Kami</h1>
-
-                        <ul className="filter-tab">
-                            {["All Produk", "Fiksi Indonesia", "Pengembangan Diri", "Fiksi Terjemahan"].map((item) => (
-                                <li
-                                    key={item}
-                                    className={activeFilter === item ? "active" : ""}
-                                    onClick={() => setActiveFilter(item)}
-                                >
-                                    {item}
-                                </li>
-                            ))}
-                        </ul>
-
-                        <div className="produk-list">
-                            {bukuDifilter.map((buku) => (
-                                <div className="card-produk" key={buku.id}>
-                                    <img src={buku.src} alt={buku.nama} />
-                                    <div className="info-buku">
-                                        <h3>{buku.nama}</h3>
-                                        <p className="kategori-tag">{buku.kategori}</p>
-                                        <p className="harga-text">{buku.harga}</p>
-                                        <p className="deskripsi-singkat">{buku.deskripsi}</p>
-                                        <button className="btn-beli">Beli Sekarang</button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+                        <h1 className="text-center" style={{ fontWeight: "bold", paddingBottom: "-80px",marginBottom: "-80px" }}>Koleksi Buku Kami</h1>
                     </div>
                 </div>
             </div>
 
-            <div className="testimoni" id="testimoni" style={{ padding: "80px 0", backgroundColor: "#fff" }}>
-                <Container>
-                    <h1 className="text-center mb-5">Apa Kata Mereka?</h1>
-                    <Swiper
-                        slidesPerView={1}
-                        spaceBetween={30}
-                        pagination={{ clickable: true }}
-                        breakpoints={{
-                            640: { slidesPerView: 1 },
-                            768: { slidesPerView: 2 },
-                            1024: { slidesPerView: 3 },
-                        }}
-                        modules={[Pagination]}
-                        className="mySwiper"
-                    >
-                        {dataSwiper.map((data) => (
-                            <SwiperSlide key={data.id}>
-                                <div className="testi-card">
-                                    <p className="desc">{data.desc}</p>
-                                    <div className="user">
-                                        <img src={data.image} alt="" />
-                                        <div>
-                                            <h5>{data.name}</h5>
-                                            <p>{data.skill}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-                </Container>
+            <div className="produk-list">
+                {featuredProducts.map((buku) => (
+                    <div className="card-produk" key={buku.id_product}>
+                        <img src={buku.src} alt={buku.title} />
+                        <div className="info-buku">
+                            <h3>{buku.title}</h3>
+                            <p>Penulis: {buku.author}</p>
+                            <button className="btn-notify" onClick={() => navigate("/produk")}>
+                                Lihat Detail
+                            </button>
+                        </div>
+                    </div>
+                ))}
             </div>
+            <FooterComponent />
         </div>
     );
 
-}
+};
 
 export default HomePage;

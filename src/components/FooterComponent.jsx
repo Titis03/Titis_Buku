@@ -3,51 +3,53 @@ import {Link} from "react-router-dom";
 
 const FooterComponent = () => {
   return (
-    <div  className="footer py-5">
-      <Container>
+    <div  className="footer">
+      <Container fluid>
         <Row className="d-flex justify-content-between">
-          <Col lg="5">
-            <h3 className="fw-bold">TSABITHA_RESTI</h3>
+          <Col lg="5" className="footer-info">
+            <h3>TSABITHA_RESTI</h3>
             <p className="desc">Jendela dunia ada di genggaman Anda. TsaBook menghadirkan koleksi buku terlengkap dari berbagai genre untuk menginspirasi setiap langkah perjalanan intelektual Anda. Temukan sahabat setia dalam lembaran kertas berkualitas hanya di sini.</p>
-            <div className="no mb-1 mt-4">
-              <Link className="text-decoration-none d-flex align-items-center">
+            <div className="contact-item mt-4">
+               <Link to="#" className="footer-link">
                <i className="fa-brands fa-whatsapp me-2"></i>
-               <p className="m-0">+62 821-4232-4394</p>
+               <span>+62 821-4232-4394</span>
               </Link>
             </div>
-            <div className="mail">
-              <Link className="text-decoration-none">
-               <i className="fa-regular fa-envelope"></i>
-               <p className="m-0">titistsabitha28@gmail.com</p>
+            <div className="contact-item">
+              <Link to="#" className="footer-link">
+               <i className="fa-regular fa-envelope me-2"></i>
+               <span>titistsabitha28@gmail.com</span>
               </Link>
             </div>
           </Col>
-          <Col className="d-flex flex-column col-lg-2 col mt-lg-0 mt-5">
-          <h5 className="fw-bold">Menu</h5>
+
+          <Col lg="2" className="footer-menu col mt-lg-0 mt-5">
+          <h5>Menu</h5>
           <Link to="/homePage">Home</Link>
-          <li><a href="#produk">Produk</a></li>
-          <li><a href="#testimoni">Testimoni</a></li>
-          <Link to="tentangKami">Tentang Kami</Link>
+          <Link to="/produk">Produk</Link>
+          <Link to="/TestimonialPage">Testimonial</Link>
+          <Link to="/tentangKami">Tentang</Link>
           <Link to="/alamat">Alamat</Link>
           </Col>
-          <Col lg="4" className="mt-lg-0 mt-5">
-          <h5 className="fw-bold mb-3">Subscribe untuk info menarik</h5>
-          <div className="subscribe">
-            <input type="text" placeholder="Subscribe..."/>
-            <button className="btn btn-danger rounded-end rounded-0">Subscribe</button>
+          
+          <Col lg="4" className="footer-subscribe mt-lg-0 mt-5">
+          <h5>Subscribe untuk info menarik</h5>
+          <div className="subscribe-box">
+            <input type="text" placeholder="Email Anda..."/>
+            <button className="btn btn-subscribe">Subscribe</button>
           </div>
-          <div className="social mt-3">
-            <i className="fa-brands fa-facebook me-3"></i>
-            <i className="fa-brands fa-twitter me-3"></i>
-            <i className="fa-brands fa-linkedin me-3"></i>
-            <i className="fa-brands fa-youtube me-3"></i>
+          <div className="social-icons mt-3">
+            <i className="fa-brands fa-facebook"></i>
+            <i className="fa-brands fa-twitter"></i>
+            <i className="fa-brands fa-linkedin"></i>
+            <i className="fa-brands fa-youtube"></i>
           </div>
           </Col>
         </Row>
-        <Row className="mt-5">
+        <Row className="footer-bottom">
           <Col>
             <hr/>
-            <p className="text-center px-md-0 px-3">&copy; Copyright {new Date().getFullYear()} by <span className="fw-bold">Titis Tsabitha</span>,
+            <p>&copy; Copyright {new Date().getFullYear()} by <span>Titis Tsabitha</span>,
             All Right Reserved </p>
           </Col>
         </Row>
@@ -56,4 +58,4 @@ const FooterComponent = () => {
   )
 }
 
-export default FooterComponent
+export default FooterComponent;

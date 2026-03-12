@@ -1,4 +1,5 @@
 import {Container, Row, Col} from "react-bootstrap";
+import FooterComponent from "../components/FooterComponent";
 
 const TentangKami = () => {
   return (
@@ -36,6 +37,7 @@ const TentangKami = () => {
           </Row>
         </Container>
       </div>
+            <FooterComponent />
     </div>
   );
 };

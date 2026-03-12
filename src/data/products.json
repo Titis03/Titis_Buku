@@ -1,0 +1,83 @@
+[
+  {
+    "id_product": 1,
+    "title": "Laut Bercerita",
+    "author": "Leila S. Chudori",
+    "category_name": "Fiksi Indonesia",
+    "price": 115000.00,
+    "stock": 75,
+    "src": "/LautBercerita.jpg"
+  },
+  {
+    "id_product": 2,
+    "title": "Cantik Itu Luka",
+    "author": "Eka Kurniawan",
+    "category_name": "Fiksi Indonesia",
+    "price": 105000.00,
+    "stock": 40,
+    "src": "/CantikItuLuka.jpg"
+  },
+  {
+    "id_product": 3,
+    "title": "Laskar Pelangi",
+    "author": "Andrea Hirata",
+    "category_name": "Fiksi Indonesia",
+    "price": 85000.00,
+    "stock": 90,
+    "src": "/LaskarPelangi.jpg"
+  },
+  {
+    "id_product": 4,
+    "title": "Perahu Kertas",
+    "author": "Dee Lestari",
+    "category_name": "Fiksi Indonesia",
+    "price": 95000.00,
+    "stock": 60,
+    "src": "/PerahuKertas.jpg"
+  },
+  {
+    "id_product": 5,
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "category_name": "Pengembangan Diri",
+    "price": 108000.00,
+    "stock": 120,
+    "src": "/AtomicHabits.jpg"
+  },
+  {
+    "id_product": 6,
+    "title": "Filosofi Teras",
+    "author": "Henry Manampiring",
+    "category_name": "Pengembangan Diri",
+    "price": 108000.00,
+    "stock": 150,
+    "src": "/FilosofiTeras.jpg"
+  },
+  {
+    "id_product": 7,
+    "title": "Sebuah Seni untuk Bersikap Bodo Amat",
+    "author": "Mark Manson",
+    "category_name": "Pengembangan Diri",
+    "price": 95000.00,
+    "stock": 110,
+    "src": "/SebuahSeniuntukBersikapBodoAmat.jpg"
+  },
+  {
+    "id_product": 8,
+    "title": "The Alchemist (Sang Alkemis)",
+    "author": "Paulo Coelho",
+    "category_name": "Fiksi Terjemahan / Klasik",
+    "price": 65000.00,
+    "stock": 80,
+    "src": "/TheAlchemist.jpg"
+  },
+  {
+    "id_product": 9,
+    "title": "The Midnight Library (Perpustakaan Tengah Malam)",
+    "author": "Matt Haig",
+    "category_name": "Fiksi Terjemahan / Klasik",
+    "price": 100000.00,
+    "stock": 55,
+    "src": "/TheMidnightLibrary.jpg"
+  }
+]
