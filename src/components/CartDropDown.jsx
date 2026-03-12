@@ -11,7 +11,7 @@ const CartDropDown = ({ isOpen, onClose }) => {
     const [loading, setLoading] = useState(false);
 
     const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
 
     useEffect(() => {
         if (isOpen && userId && token) {

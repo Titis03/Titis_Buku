@@ -10,6 +10,7 @@ const FooterComponent = () => {
             <h3>TSABITHA_RESTI</h3>
             <p className="desc">Jendela dunia ada di genggaman Anda. TsaBook menghadirkan koleksi buku terlengkap dari berbagai genre untuk menginspirasi setiap langkah perjalanan intelektual Anda. Temukan sahabat setia dalam lembaran kertas berkualitas hanya di sini.</p>
             <div className="contact-item mt-4">
+              <h3>CONTACT US</h3>
                <Link to="#" className="footer-link">
                <i className="fa-brands fa-whatsapp me-2"></i>
                <span>+62 821-4232-4394</span>
@@ -31,7 +32,13 @@ const FooterComponent = () => {
           <Link to="/tentangKami">Tentang</Link>
           <Link to="/alamat">Alamat</Link>
           </Col>
-          
+
+          <Col lg="2" className="footer-informasi col mt-lg-0 mt-5"></Col>
+          <h5>Informasi Berbelanja</h5>
+          <Link to="/berbelanja">Berbelanja</Link>
+          <Link to="/pembayaran">Pembayaran</Link>
+          <Link to="/pengiriman">Pengiriman</Link>
+
           <Col lg="4" className="footer-subscribe mt-lg-0 mt-5">
           <h5>Subscribe untuk info menarik</h5>
           <div className="subscribe-box">

@@ -8,6 +8,12 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { BsCart3 } from "react-icons/bs";
 
+import Aman from "../assets/assets/icons/Aman.png";
+import Buku from "../assets/assets/icons/Buku.png";
+import Original from "../assets/assets/icons/Original.png";
+import Ramah from "../assets/assets/icons/Ramah.png";
+import Terpercaya from "../assets/assets/icons/Terpercaya.png";
+
 const HomePage = () => {
     const navigate = useNavigate();
 
@@ -62,6 +68,35 @@ const HomePage = () => {
                         </div>
 
                     </div>
+
+                    <div className="layanan-box">
+                        <div className="box">
+                            <img src={Aman} alt="Garansi Pembelian" className="icon-layanan" />
+                            <h2>Garansi Pembelian</h2>
+                        </div>
+
+                        <div className="box">
+                            <img src={Buku} alt="Buku Terbaik" className="icon-layanan" />
+                            <h2>Buku Terbaik</h2>
+                        </div>
+
+                        <div className="box">
+                            <img src={Original} alt="Pasti Original" className="icon-layanan" />
+                            <h2>Pasti Original</h2>
+                        </div>
+
+                        <div className="box">
+                            <img src={Ramah} alt="Pelayanan Ramah" className="icon-layanan" />
+                            <h2>Pelayanan Ramah</h2>
+                        </div>
+
+                        <div className="box">
+                            <img src={Terpercaya} alt="Toko Terpercaya" className="icon-layanan" />
+                            <h2>Toko Terpercaya</h2>
+                        </div>
+
+                    </div>
+                    
                 </div>
             </div>
 

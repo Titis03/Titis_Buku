@@ -9,7 +9,7 @@ const Navbar = () => {
   const [cartCount, setCartCount] = useState(0);
   const [cartOpen, setCartOpen] = useState(false);
   
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('accessToken');
   const userId = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.clear(); 
-    navigate("/");       
+    navigate("/login");       
   };
 
   return (

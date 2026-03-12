@@ -15,7 +15,7 @@ function Login() {
                 password
             });
 
-            localStorage.setItem("accessToken", response.data.accessToken);
+            localStorage.setItem("accessToken", response.data.token);
             localStorage.setItem("username", response.data.user.username);
             localStorage.setItem("role", response.data.user.role);
             

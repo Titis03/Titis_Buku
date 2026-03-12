@@ -14,12 +14,16 @@ import TentangKami from "./pages/tentangKami";
 import Alamat from "./pages/alamat";
 import TestimonialPage from "./pages/TestimonialPage";
 import TransactionDetail from "./pages/TransactionDetail";
+import Belanja from "./pages/berbelanja";
+import Pembayaran from "./pages/pembayaran";
+import Pengiriman from "./pages/pengiriman";
 
 function App() {
   const location = useLocation();
 
   const isAuthenticated = !!localStorage.getItem("accessToken");
-
+  const token = localStorage.getItem("token");
+  const  userRole = localStorage.getItem("role");
   const allowedPaths = ["/homePage", "/produk", "/tentangKami", "/alamat", "/TestimonialPage"];
   const shouldShowHeaderFooter = allowedPaths.includes(location.pathname);
 
@@ -63,6 +67,18 @@ function App() {
         <Route
           path="/TestimonialPage"
           element={isAuthenticated ? <TestimonialPage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/berbelanja"
+          element={isAuthenticated ? <Belanja/> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/pembayaran"
+          element={isAuthenticated ? <Pembayaran/> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/pengiriman"
+          element={isAuthenticated ? <Pengiriman/> : <Navigate to="/login" />}
         />
 
         <Route path="*" element={<Navigate to="/" />} />
