@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import FooterComponent from "../components/FooterComponent";
+import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BsCart3, BsLightning } from 'react-icons/bs';
+import CartDropDown from '../components/CartDropDown';  
 
 const Produk = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cartLoading, setCartLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState("All Produk");
+  const [cartOpen, setCartOpen] = useState(false);
+
+  const token = localStorage.getItem('token');
+  const userId = localStorage.getItem('userId');
+  const roleUser = localStorage.getItem('role');
 
   const fetchBuku = async () => {
     try {
@@ -22,6 +34,123 @@ const Produk = () => {
     fetchBuku();
   }, []);
 
+  const tambahKeKeranjang = async (buku) => {
+    if (!token || !userId) {
+      toast.warning('Silakan login terlebih dahulu!');
+      navigate('/login');
+      return;
+    }
+
+    if (roleUser !== 'cashier') {
+      toast.warning('Hanya cashier yang dapat menambah ke keranjang');
+      return;
+    }
+
+    if (buku.stock < 1) {
+      toast.error('Stok buku habis!');
+      return;
+    }
+
+    try {
+      setCartLoading(true);
+      
+      const response = await axios.post(
+        'http://localhost:3000/api/cart/add',
+        {
+          userId: parseInt(userId),
+          productId: buku.id_product,
+          quantity: 1
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` }
+        }
+      );
+
+      if (response.data) {
+        toast.success(`${buku.title} ditambahkan ke keranjang!`);
+        window.dispatchEvent(new CustomEvent('cartUpdated'));
+        setCartOpen(true);
+      }
+      
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      
+      if (error.response?.status === 400) {
+        toast.error(error.response.data.error || 'Stok tidak mencukupi');
+      } else if (error.response?.status === 403) {
+        toast.error('Anda tidak memiliki akses');
+      } else {
+        toast.error('Gagal menambah ke keranjang');
+      }
+    } finally {
+      setCartLoading(false);
+    }
+  };
+
+  const beliSekarang = async (buku) => {
+    if (!token || !userId) {
+      toast.warning('Silakan login terlebih dahulu!');
+      navigate('/login');
+      return;
+    }
+
+    if (roleUser !== 'cashier') {
+      toast.warning('Hanya cashier yang dapat melakukan transaksi');
+      return;
+    }
+
+    if (buku.stock < 1) {
+      toast.error('Stok buku habis!');
+      return;
+    }
+
+    try {
+      setCartLoading(true);
+      
+      const transactionData = {
+        total_price: parseFloat(buku.price),
+        payment_method: 'transfer',
+        items: [
+          {
+            id_product: buku.id_product,
+            quantity: 1,
+            book_price: parseFloat(buku.price)
+          }
+        ]
+      };
+
+      const response = await axios.post(
+        'http://localhost:3000/api/transactions',
+        transactionData,
+        {
+          headers: { 
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (response.status === 201) {
+        toast.success('Transaksi berhasil dibuat!');
+        fetchBuku();
+        navigate(`/transaksi/${response.data.transaction.id_transaction}`);
+      }
+      
+    } catch (error) {
+      console.error('Error creating transaction:', error);
+      
+      if (error.response?.status === 400) {
+        toast.error(error.response.data.error || 'Gagal membuat transaksi');
+      } else if (error.response?.status === 403) {
+        toast.error('Anda tidak memiliki akses sebagai cashier');
+      } else {
+        toast.error('Gagal membuat transaksi');
+      }
+    } finally {
+      setCartLoading(false);
+    }
+  };
+
   const bukuDifilter = activeFilter === "All Produk"
     ? products
     : products.filter(buku =>
@@ -30,6 +159,20 @@ const Produk = () => {
 
   return (
     <div className="produk-page">
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+
+      <CartDropDown isOpen={cartOpen} onClose={() => setCartOpen(false)} />
+
       <div className="container">
         <div className="produk" id="produk">
           <div className="produk-box">
@@ -71,8 +214,67 @@ const Produk = () => {
                         <p className="harga">
                           Rp {Number(buku.price).toLocaleString('id-ID')}
                         </p>
-                        <p className="stok">Stok: {buku.stock}</p>
-                        <button className="btn-beli">Beli Sekarang</button>
+                        <p className="stok" style={{ 
+                          color: buku.stock > 0 ? '#1b4b35' : '#ff6b6b',
+                          fontWeight: '600'
+                        }}>
+                          Stok: {buku.stock}
+                        </p>
+                      </div>
+
+                      <div className="action-buttons" style={{
+                        display: 'flex',
+                        gap: '10px',
+                        marginTop: '15px',
+                        width: '100%'
+                      }}>
+                        <button 
+                          className="btn-cart"
+                          onClick={() => tambahKeKeranjang(buku)}
+                          disabled={cartLoading || buku.stock < 1}
+                          style={{
+                            flex: 1,
+                            padding: '10px 0',
+                            backgroundColor: 'transparent',
+                            border: '2px solid #007806',
+                            color: '#007806',
+                            fontSize: '13px',
+                            fontWeight: '600',
+                            borderRadius: '5px',
+                            cursor: buku.stock > 0 ? 'pointer' : 'not-allowed',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '5px',
+                            opacity: buku.stock < 1 ? 0.5 : 1
+                          }}
+                        >
+                          <BsCart3 /> Keranjang
+                        </button>
+                        
+                        <button 
+                          className="btn-buy"
+                          onClick={() => beliSekarang(buku)}
+                          disabled={cartLoading || buku.stock < 1}
+                          style={{
+                            flex: 1,
+                            padding: '10px 0',
+                            backgroundColor: '#007806',
+                            border: 'none',
+                            color: 'white',
+                            fontSize: '13px',
+                            fontWeight: '600',
+                            borderRadius: '5px',
+                            cursor: buku.stock > 0 ? 'pointer' : 'not-allowed',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '5px',
+                            opacity: buku.stock < 1 ? 0.5 : 1
+                          }}
+                        >
+                          <BsLightning /> Beli
+                        </button>
                       </div>
                     </div>
                   ))

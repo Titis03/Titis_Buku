@@ -1,31 +1,26 @@
-import express from 'express'; // Ganti require menjadi import
-import pool from '../db/pool.js'; // Gunakan akhiran .js
+import express from 'express'; 
+import pool from '../db/pool.js'; 
 import { verifyToken, requireRoles } from '../middleware/authorization.js';
 
 const router = express.Router();
 
-// Helper untuk validasi angka/price
 const isPriceValid = (value) => value !== undefined && value !== null && !Number.isNaN(Number(value)) && Number(value) >= 0;
 
 // =========================================================
 // 1. POST /transactions - Buat transaksi baru (checkout)
 // =========================================================
 router.post('/', verifyToken, requireRoles('cashier'), async (req, res) => {
-    // Diasumsikan id_user berasal dari token
     const { total_price, payment_method, items } = req.body;
     const id_user = req.user.id_user; 
 
-    // --- Validasi Data Awal ---
     if (!isPriceValid(total_price) || !payment_method || !Array.isArray(items) || items.length === 0) {
         return res.status(400).json({ error: 'Data transaksi tidak lengkap atau tidak valid.' });
     }
 
     const client = await pool.connect();
     try {
-        await client.query('BEGIN'); // Mulai transaksi DB
+        await client.query('BEGIN');
 
-        // 1️⃣ Masukkan Transaksi Utama ke tabel 'transactions'
-        // Kolom: id_user, transaction_date, total_price, payment_method
         const transactionQuery = `
             INSERT INTO transactions (id_user, transaction_date, total_price, payment_method)
             VALUES ($1, NOW(), $2, $3)
@@ -34,34 +29,28 @@ router.post('/', verifyToken, requireRoles('cashier'), async (req, res) => {
         `;
         const transactionResult = await client.query(transactionQuery, [id_user, total_price, payment_method]);
         const transaction = transactionResult.rows[0];
-        const id_transaction = transaction.id_transaction; // ID Transaksi Utama
+        const id_transaction = transaction.id_transaction; 
 
-        // 2️⃣ Persiapan dan Masukkan Item Transaksi ke tabel 'transaction_items'
         const itemValues = [];
         const itemParams = [];
         let paramIndex = 1;
 
         for (const item of items) {
-            // Validasi item di dalam loop
             if (!item.id_product || !item.quantity || !isPriceValid(item.book_price)) {
                 await client.query('ROLLBACK'); 
                 return res.status(400).json({ error: 'Detail item tidak lengkap atau tidak valid: id_product, quantity, book_price wajib diisi.' });
             }
             
-            // --- KRITIS: HITUNG SUBTOTAL ---
             const subtotal = parseFloat(item.quantity) * parseFloat(item.book_price);
             
-            // Format untuk query batch: ($1, $2, $3, $4, $5)
-            // 5 Placeholder dibutuhkan untuk 5 kolom
             itemValues.push(`($${paramIndex++}, $${paramIndex++}, $${paramIndex++}, $${paramIndex++}, $${paramIndex++})`);
             
-            // Urutan parameter (5 nilai): [id_transaksi, id_produk, kuantitas, harga satuan, subtotal]
             itemParams.push(
                 id_transaction, 
                 item.id_product, 
                 item.quantity, 
                 item.book_price, 
-                subtotal // <--- Nilai subtotal yang wajib ada
+                subtotal
             );
         }
 
@@ -73,7 +62,6 @@ router.post('/', verifyToken, requireRoles('cashier'), async (req, res) => {
         `;
         const itemsResult = await client.query(itemsQuery, itemParams);
 
-        // 3️⃣ Finalisasi dan Respons
         await client.query('COMMIT'); 
 
         res.status(201).json({
@@ -85,11 +73,9 @@ router.post('/', verifyToken, requireRoles('cashier'), async (req, res) => {
         });
 
     } catch (e) {
-        // --- Penanganan Error ---
         await client.query('ROLLBACK'); 
         console.error("DB Error POST /transactions:", e);
         
-        // Penanganan Foreign Key Violation
         if (e.code === '23503') {
              return res.status(400).json({ error: 'Data terkait tidak ditemukan. Pastikan ID produk valid dan ada di database.' });
         }
@@ -131,7 +117,6 @@ router.get('/:id', verifyToken, requireRoles('cashier'), async (req, res) => {
     }
 
     try {
-        // Ambil transaksi utama
         const transactionQuery = `
             SELECT t.id_transaction, t.transaction_date, t.total_price, t.payment_method,
                    u.username, u.fullname
@@ -145,7 +130,6 @@ router.get('/:id', verifyToken, requireRoles('cashier'), async (req, res) => {
         }
         const transaction = transactionResult.rows[0];
 
-        // Ambil item transaksi
         const itemsQuery = `
             SELECT ti.id_item, ti.product_id, p.title as product_title,
                    ti.quantity, ti.book_price
@@ -170,15 +154,12 @@ router.get('/:id', verifyToken, requireRoles('cashier'), async (req, res) => {
 // =========================================================
 router.put('/:id', verifyToken, requireRoles('cashier'), async (req, res) => {
     const id = Number(req.params.id);
-    // Hanya mengizinkan update pada payment_method dan total_price
     const { total_price, payment_method } = req.body;
 
-    // --- Validasi Data Awal ---
     if (Number.isNaN(id) || id <= 0) {
         return res.status(400).json({ error: 'ID transaksi tidak valid.' });
     }
 
-    // Validasi data yang dikirim jika ada
     const isTotalPriceUpdate = total_price !== undefined;
     const isPaymentMethodUpdate = payment_method !== undefined;
 
@@ -186,7 +167,6 @@ router.put('/:id', verifyToken, requireRoles('cashier'), async (req, res) => {
         return res.status(400).json({ error: 'Data yang diupdate tidak valid. Harga harus angka non-negatif dan metode pembayaran tidak boleh kosong.' });
     }
     
-    // Pastikan ada sesuatu untuk diupdate
     if (!isTotalPriceUpdate && !isPaymentMethodUpdate) {
          return res.status(400).json({ error: 'Tidak ada data yang dikirim untuk diupdate (hanya total_price atau payment_method yang diizinkan).' });
     }
@@ -195,7 +175,6 @@ router.put('/:id', verifyToken, requireRoles('cashier'), async (req, res) => {
     const params = [];
     let paramIndex = 1;
 
-    // Persiapan Query Dinamis
     if (isTotalPriceUpdate) {
         updates.push(`total_price = $${paramIndex++}`);
         params.push(total_price);
@@ -206,13 +185,10 @@ router.put('/:id', verifyToken, requireRoles('cashier'), async (req, res) => {
         params.push(payment_method);
     }
     
-    // Jangan lupa ID Transaksi untuk klausa WHERE
     params.push(id);
-    const idParam = `$${paramIndex}`; // Placeholder untuk ID Transaksi
+    const idParam = `$${paramIndex}`; 
 
-    
-    // Catatan: Asumsikan tabel 'transactions' memiliki kolom updated_at
-    const updateQuery = `
+        const updateQuery = `
         UPDATE transactions
         SET ${updates.join(', ')},
             updated_at = NOW() 
